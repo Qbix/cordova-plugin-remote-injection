@@ -8,7 +8,7 @@
  by subclasses but not on the exported public interface.
  */
 @interface CDVRemoteInjectionWebViewBaseDelegate ()
-@property (readwrite, weak) CDVRemoteInjectionPlugin *plugin;
+@property (readwrite, strong) CDVRemoteInjectionPlugin *plugin;
 @end
 
 @interface CDVRemoteInjectionWebViewBaseDelegate ()
@@ -220,7 +220,7 @@
     }
 
     if (userRequestedReload == NO && self.plugin.showConnectionErrorDialog == YES) {
-        [self displayRetryPromptWithMessage:@"Unable to contact the site." withCancelText:@"Close" retryable:NO];
+        // [self displayRetryPromptWithMessage:@"Unable to contact the site." withCancelText:@"Close" retryable:NO];
     }
 }
 

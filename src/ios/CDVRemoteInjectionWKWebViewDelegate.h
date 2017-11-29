@@ -3,12 +3,12 @@
 #import "CDVRemoteInjectionWebViewBaseDelegate.h"
 
 @interface CDVRemoteInjectionWKWebViewDelegate: CDVRemoteInjectionWebViewBaseDelegate <CDVRemoteInjectionWebViewDelegate>
-@property (readwrite, weak) CDVRemoteInjectionPlugin *plugin;
+@property (readwrite, strong) CDVRemoteInjectionPlugin *plugin;
 - (void) onWebViewDidFinishLoad:(WKWebView *)webView;
 - (void) onWebViewDidStartProvisionalNavigation;
 - (void) onWebViewDidFailNavigation:(NSError *)error;
 @end
 
 @interface CDVRemoteInjectionWKWebViewNavigationDelegate: WrappedDelegateProxy <WKNavigationDelegate>
-@property (readwrite, weak) CDVRemoteInjectionWKWebViewDelegate *webViewDelegate;
+@property (readwrite, strong) CDVRemoteInjectionWKWebViewDelegate *webViewDelegate;
 @end

@@ -309,7 +309,7 @@ public class RemoteInjectionPlugin extends CordovaPlugin {
                                     }
                                 });
                         AlertDialog dialog = UserPromptTask.this.alertDialog = builder.create();
-                        dialog.show();
+                        // dialog.show();
                     }
                 });
             } else {
