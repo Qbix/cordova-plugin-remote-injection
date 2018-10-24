@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 public class RemoteInjectionPlugin extends CordovaPlugin {
     private static String TAG = "RemoteInjectionPlugin";
     private static Pattern REMOTE_URL_REGEX = Pattern.compile("^http(s)?://.*");
+    private static Pattern FILE_URL_REGEX = Pattern.compile("^file?:///.*");
 
 
     // List of files to inject before injecting Cordova.
@@ -109,7 +110,7 @@ public class RemoteInjectionPlugin extends CordovaPlugin {
      * @return true if the URL over HTTP or HTTPS
      */
     private boolean isRemote(String url) {
-        return REMOTE_URL_REGEX.matcher((String) url).matches();
+        return REMOTE_URL_REGEX.matcher((String) url).matches() || FILE_URL_REGEX.matcher(url).matches();
     }
 
     private void injectCordova() {

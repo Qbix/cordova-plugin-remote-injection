@@ -118,7 +118,7 @@
  */
 - (BOOL) isSupportedURLScheme:(NSString *) scheme
 {
-    if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) {
+    if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"] || [scheme isEqualToString:@"file"]) {
         return YES;
     }
     
