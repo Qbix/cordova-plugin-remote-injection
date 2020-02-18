@@ -80,6 +80,12 @@
         _showConnectionErrorDialog = YES;
     }
 
+    value = [self settingForKey:@"CRIEnableRemoteInjection"];
+    _enableInject = false;
+    if(value == NULL || [value isEqualToString:@""] || [value isEqual: @"true"]) {
+        _enableInject = true;
+    }
+
     id webView = [self findWebView];
     if ([webView isKindOfClass:[UIWebView class]]) {
         NSLog(@"Found UIWebView");

@@ -17,6 +17,7 @@ From CRIShowConnectionErrorDialog preference.  Defaults to true.  False if prefe
 is set to 0.
  */
 @property (readonly) BOOL showConnectionErrorDialog;
+@property (readonly) BOOL enableInject;
     
 - (id) findWebView;
 @end
