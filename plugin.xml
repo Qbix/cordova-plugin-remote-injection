@@ -6,6 +6,7 @@
   <license>Apache 2.0</license>
   <keywords>cordova,remote,injection</keywords>
   <author>Brad Reynolds</author>
+  <preference name="CRIEnableRemoteInjection" value="true" />
   <platform name="ios">
     <framework src="WebKit.framework" weak="true" />
     <config-file target="config.xml" parent="/*">
