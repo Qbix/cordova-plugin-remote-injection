@@ -6,7 +6,6 @@
   <license>Apache 2.0</license>
   <keywords>cordova,remote,injection</keywords>
   <author>Brad Reynolds</author>
-  <preference name="CRIEnableRemoteInjection" value="true" />
   <platform name="ios">
     <framework src="WebKit.framework" weak="true" />
     <config-file target="config.xml" parent="/*">
@@ -14,6 +13,7 @@
           <param name="ios-package" value="CDVRemoteInjectionPlugin" />
           <param name="onload" value="true" />
       </feature>
+      <preference name="CRIEnableRemoteInjection" value="true" />
     </config-file>
     <header-file src="src/ios/CDVRemoteInjection.h" />
     <source-file src="src/ios/CDVRemoteInjection.m" />
@@ -30,6 +30,7 @@
         <param name="android-package" value="com.truckmovers.cordova.RemoteInjectionPlugin" />
         <param name="onload" value="true" />
       </feature>
+      <preference name="CRIEnableRemoteInjection" value="true" />
     </config-file>
     <source-file src="src/android/RemoteInjectionPlugin.java" target-dir="src/com/truckmovers/cordova" />
   </platform>
