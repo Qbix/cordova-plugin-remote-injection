@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.util.Base64;
 
+import com.q.cordova.plugin.QResultEncryptManager;
+
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebViewEngine;
 import org.apache.cordova.LOG;
@@ -130,15 +132,27 @@ public class RemoteInjectionPlugin extends CordovaPlugin {
         // Initialize the cordova plugin registry.
         jsPaths.add("www/cordova_plugins.js");
 
+        String androidExecEncryptionPath = "www/plugins/com.q.cordova/www/q-android-exec.js";
+
         // The way that I figured out to inject for android is to inject it as a script
         // tag with the full JS encoded as a data URI
         // (https://developer.mozilla.org/en-US/docs/Web/HTTP/data_URIs).  The script tag
         // is appended to the DOM and executed via a javascript URL (e.g. javascript:doJsStuff()).
         StringBuilder jsToInject = new StringBuilder();
         for (String path: jsPaths) {
-            jsToInject.append(readFile(cordova.getActivity().getResources().getAssets(), path));
+            String content = readFile(cordova.getActivity().getResources().getAssets(), path);
+            if(path.equalsIgnoreCase("www/cordova.js")) {
+                int startIndex = content.indexOf("define(\"cordova/exec\"");
+                content = content.replace("define(\"cordova/exec\"", "define(\"cordova/exec_deprecated\"");
+                String androidExecEncryption = readFile(cordova.getActivity().getResources().getAssets(), androidExecEncryptionPath);
+                content = content.substring(0, startIndex)+"\n"+androidExecEncryption+"\n"+content.substring(startIndex);
+            }
+            if(!path.equalsIgnoreCase(androidExecEncryptionPath) && !path.equalsIgnoreCase("www/plugins/com.q.cordova/www/q-ios-wkwebview-exec.js")) {
+                jsToInject.append(content);
+            }
         }
-        String jsUrl = "javascript:var script = document.createElement('script');";
+        String pubKey = QResultEncryptManager.getInstance().getPubKey();
+        String jsUrl = "javascript:var script = document.createElement('script');window.Q_PUB_KEY='"+ pubKey +"';";
         jsUrl += "script.src=\"data:text/javascript;charset=utf-8;base64,";
 
         jsUrl += Base64.encodeToString(jsToInject.toString().getBytes(), Base64.NO_WRAP);
