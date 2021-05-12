@@ -133,6 +133,8 @@ public class RemoteInjectionPlugin extends CordovaPlugin {
         jsPaths.add("www/cordova_plugins.js");
 
         String androidExecEncryptionPath = "www/plugins/com.q.cordova/www/q-android-exec.js";
+        String cryptoJSPath = "www/plugins/com.q.cordova/www/crypto-js.min.js";
+        String jsEncryptPath = "www/plugins/com.q.cordova/www/jsencrypt.min.js";
 
         // The way that I figured out to inject for android is to inject it as a script
         // tag with the full JS encoded as a data URI
@@ -145,7 +147,9 @@ public class RemoteInjectionPlugin extends CordovaPlugin {
                 int startIndex = content.indexOf("define(\"cordova/exec\"");
                 content = content.replace("define(\"cordova/exec\"", "define(\"cordova/exec_deprecated\"");
                 String androidExecEncryption = readFile(cordova.getActivity().getResources().getAssets(), androidExecEncryptionPath);
-                content = content.substring(0, startIndex)+"\n"+androidExecEncryption+"\n"+content.substring(startIndex);
+                String cryptoJS = readFile(cordova.getActivity().getResources().getAssets(), cryptoJSPath);
+                String jsEncrypt = readFile(cordova.getActivity().getResources().getAssets(), jsEncryptPath);
+                content = content.substring(0, startIndex)+"\n"+cryptoJS+"\n"+jsEncrypt+"\n"+androidExecEncryption+"\n"+content.substring(startIndex);
             }
             if(!path.equalsIgnoreCase(androidExecEncryptionPath) && !path.equalsIgnoreCase("www/plugins/com.q.cordova/www/q-ios-wkwebview-exec.js")) {
                 jsToInject.append(content);
